@@ -3,7 +3,7 @@
  stdenvNoCC.mkDerivation rec {
    repoName = "sshrm";
    pname = "sshrm";
-   version = "git-0803f9";
+   version = "git-0803f98";
 
   src = fetchFromGitHub {
     owner = "aaaaadrien";
