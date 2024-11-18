@@ -3,13 +3,13 @@
  stdenvNoCC.mkDerivation rec {
    repoName = "sshrm";
    pname = "sshrm";
-   version = "git-0803f98";
+   version = "git-bf29f9b";
 
   src = fetchFromGitHub {
     owner = "aaaaadrien";
     repo = repoName;
-    rev = "0803f982130ebcceb43abe4fe84da3541856ed46";
-    sha256 = "sha256-Sm9RAK6UdvL0yHfE12gIjoLfy3pZBqgRtfm20X1FWm0=";
+    rev = "bf29f9b4bc83f215ff566df6ed29149ea21632a3";
+    sha256 = "sha256-m7ltKxajRHsoops8T/vutbVVya8qCUQLPuO6LjB6LXE=";
   };
 
   installPhase = ''
