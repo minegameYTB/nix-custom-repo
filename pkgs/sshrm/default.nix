@@ -1,21 +1,22 @@
 { lib, stdenvNoCC, fetchFromGitHub }:
 
  stdenvNoCC.mkDerivation rec {
-   name = "sshrm";
-   version = "git-bf29f9b";
+   repoName = "sshrm";
+   pname = "sshrm";
+   version = "git-0803f9";
 
   src = fetchFromGitHub {
     owner = "aaaaadrien";
-    repo = "sshrm";
-    rev = "bf29f9b4bc83f215ff566df6ed29149ea21632a3";
-    sha256 = "sha256-m7ltKxajRHsoops8T/vutbVVya8qCUQLPuO6LjB6LXE=";
+    repo = repoName;
+    rev = "0803f982130ebcceb43abe4fe84da3541856ed46";
+    sha256 = "sha256-Sm9RAK6UdvL0yHfE12gIjoLfy3pZBqgRtfm20X1FWm0=";
   };
 
   installPhase = ''
     ### Make sshrm available to nix
     mkdir -p $out/bin
-    cp ${src}/${name} $out/bin/${name}
-    chmod +x $out/bin/${name}
+    cp ${src}/${repoName} $out/bin/${repoName}
+    chmod +x $out/bin/${repoName}
 
     ### Add license file accessible on the right directory
     mkdir -p $out/share/licenses/sshrm
