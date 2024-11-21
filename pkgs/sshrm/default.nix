@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, fetchFromGitHub }:
+{ lib, stdenvNoCC, openssh, fetchFromGitHub }:
 
  stdenvNoCC.mkDerivation rec {
    repoName = "sshrm";
@@ -15,8 +15,8 @@
   installPhase = ''
     ### Make sshrm available to nix
     mkdir -p $out/bin
-    cp ${src}/${repoName} $out/bin/${repoName}
-    chmod +x $out/bin/${repoName}
+    cp ${pname} $out/bin/${pname}
+    chmod +x $out/bin/${pname}
 
     ### Add license file accessible on the right directory
     mkdir -p $out/share/licenses/sshrm
