@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, openssh, fetchFromGitHub }:
+{ lib, stdenvNoCC, openssh, makeWrapper, fetchFromGitHub }:
 
  stdenvNoCC.mkDerivation rec {
    repoName = "sshrm";
@@ -12,11 +12,15 @@
     sha256 = "sha256-m7ltKxajRHsoops8T/vutbVVya8qCUQLPuO6LjB6LXE=";
   };
 
+  buildInputs = [ openssh makeWrapper ];
+
   installPhase = ''
     ### Make sshrm available to nix
     mkdir -p $out/bin
     cp ${pname} $out/bin/${pname}
     chmod +x $out/bin/${pname}
+    wrapProgram $out/bin/${pname} \
+      --prefix PATH : ${lib.makeBinPath [openssh]}
 
     ### Add license file accessible on the right directory
     mkdir -p $out/share/licenses/sshrm
