@@ -5,7 +5,7 @@
     { pkgs, ... }:
     {
       packages = {
-        sshrm = pkgs.callPackage ../pkgs/sshrm {};
+        sshrm = pkgs.callPackage ../pkgs/cli/sshrm {};
         ### Add new pkgs here
       };
     };
