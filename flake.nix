@@ -1,18 +1,17 @@
 {
   description = "A basic custom repository";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  };
+ inputs = {
+   nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+   flake-parts.url = "github:hercules-ci/flake-parts";
+   systems.url = "github:nix-systems/default";
+ };
 
-  outputs = { self, nixpkgs }:
-  let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs { inherit system; };
-  in {
-    packages.${system} = rec {
-      sshrm = pkgs.callPackage ./pkgs/sshrm {};
-      ### Add new pkgs here
-    };
+ outputs = inputs@{ flake-parts, systems, ... }:
+  flake-parts.lib.mkFlake { inherit inputs; } {
+    systems = import systems;
+    imports =[
+    	./imports/packages-all.nix
+    ];
   };
 }
