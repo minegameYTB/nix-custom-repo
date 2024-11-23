@@ -23,15 +23,16 @@
       --prefix PATH : ${lib.makeBinPath [openssh]}
 
     ### Add license file accessible on the right directory
-    mkdir -p $out/share/licenses/sshrm
-    cp ${src}/LICENSE $out/share/licenses/sshrm/LICENSE
+    mkdir -p $out/share/doc/sshrm
+    cp LICENSE $out/share/doc/sshrm/LICENSE
+    cp README.md $out/share/doc/sshrm/README.md
   '';
 
- #meta = with stdenv.lib; {
- #  description = "A tool to remove quickly all keys belonging to the specified host from a known_hosts file.";
- #  homepage = "https://github.com/aaaaadrien/sshrm";
- #  license = licenses.mit;
- #  maintainers = with maintainers; [ minegameYTB ];
- #  platforms = lib.platforms.linux;
- #};
-}
+  #meta = with stdenv.lib; {
+  #  description = "A tool to remove quickly all keys belonging to the specified host from a known_hosts file.";
+  #  homepage = "https://github.com/aaaaadrien/sshrm";
+  #  license = licenses.mit;
+  #  maintainers = with maintainers; [ minegameYTB ];
+  #  platforms = lib.platforms.linux;
+  #};
+ }
