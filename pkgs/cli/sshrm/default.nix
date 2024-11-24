@@ -3,13 +3,13 @@
  stdenvNoCC.mkDerivation rec {
    repoName = "sshrm";
    pname = "sshrm";
-   version = "git-bf29f9b";
+   version = "git-0803f98";
 
   src = fetchFromGitHub {
     owner = "aaaaadrien";
     repo = repoName;
-    rev = "bf29f9b4bc83f215ff566df6ed29149ea21632a3";
-    sha256 = "sha256-m7ltKxajRHsoops8T/vutbVVya8qCUQLPuO6LjB6LXE=";
+    rev = "0803f982130ebcceb43abe4fe84da3541856ed46";
+    sha256 = "sha256-Sm9RAK6UdvL0yHfE12gIjoLfy3pZBqgRtfm20X1FWm0=";
   };
 
   buildInputs = [ openssh makeWrapper ];
@@ -31,7 +31,7 @@
   #meta = with stdenv.lib; {
   #  description = "A tool to remove quickly all keys belonging to the specified host from a known_hosts file.";
   #  homepage = "https://github.com/aaaaadrien/sshrm";
-  #  license = licenses.mit;
+  #  license = licenses.gpl3;
   #  maintainers = with maintainers; [ minegameYTB ];
   #  platforms = lib.platforms.linux;
   #};
