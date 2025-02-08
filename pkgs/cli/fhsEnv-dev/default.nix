@@ -74,9 +74,7 @@ let
       rust-bindgen
       pahole
     ]
-
-    ### Template section (only added if template is true)
-    ++ lib.optionals template ''
+   #++ lib.optionals template ''
       # Template for extending or customizing the FHS environment:
       #
       #    Adding more packages:
@@ -95,7 +93,7 @@ let
       #
       #    runScript = "zsh";  # Use Zsh instead of Bash
       #
-    '';
+   #'';
 
     runScript = "bash";
   };
