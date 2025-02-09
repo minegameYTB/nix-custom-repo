@@ -1,20 +1,20 @@
-{ stdenvNoCC, substituteAll, writeScriptBin, fetchFromGitHub, fastfetch, coreutils, gawk, makeWrapper }:
+{ stdenvNoCC, substituteAll, writeScriptBin, fetchFromGitHub, fastfetch, coreutils, gawk, bash, makeWrapper }:
 
 stdenvNoCC.mkDerivation rec {
   pname = "GLFfetch-nixos";
-  version = "git-${builtins.substring 0 7 src.rev}";  # Génération dynamique de la version
+  version = "git-${builtins.substring 0 7 src.rev}";  ### To update version number
 
   src = fetchFromGitHub {
     owner = "minegameYTB";
     repo = pname;
-    rev = "73224999309bbfe0b356507672621d138ff8deff";
-    sha256 = "sha256-gbd/boOHSqK8EHD+7y1k3bAxGwsHnkXJGgzKYgBhi3A=";
+    rev = "e050de0e8e77f0068a745a1659adb7533b43a29e";
+    sha256 = "sha256-BEWPX5rUm2k/O6g6uHvSjOxCUqsUMmwXBwhMQmnBd48=";
   };
 
   outputs = [ "out" "assets" ];
   outputsToInstall = outputs;
 
-  buildInputs = [ fastfetch coreutils gawk ];
+  buildInputs = [ fastfetch bash coreutils gawk ];
   nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
@@ -28,7 +28,8 @@ stdenvNoCC.mkDerivation rec {
     fi
 
     substituteInPlace $assets/share/${pname}/challenge.jsonc \
-      --replace-warn @GLF-path@ "$assets/share/${pname}"
+      --replace-warn @GLF-path@ "$assets/share/${pname}" \
+      --replace-warn @shell@ "${bash}"
 
     for script in $assets/share/${pname}/scripts/*.sh; do
       substituteInPlace "$script" \
