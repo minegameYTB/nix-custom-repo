@@ -2,9 +2,9 @@
 
 {
   perSystem =
-    { pkgs, callPackage, ... }:
+    { pkgs, ... }:
     {
-      packages = {
+      packages = with pkgs; {
         sshrm = callPackage ../pkgs/cli/sshrm {};
         fhsEnv-dev = callPackage ../pkgs/cli/fhsEnv-dev {};
         GLFfetch = callPackage ../pkgs/cli/GLFfetch {};
