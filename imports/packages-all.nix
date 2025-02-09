@@ -2,12 +2,13 @@
 
 {
   perSystem =
-    { pkgs, ... }:
+    { pkgs, callPackage, ... }:
     {
       packages = {
-        sshrm = pkgs.callPackage ../pkgs/cli/sshrm {};
-        fhsEnv-dev = pkgs.callPackage ../pkgs/cli/fhsEnv-dev {};
-        hello = pkgs.callPackage ../pkgs/misc/hello {};
+        sshrm = callPackage ../pkgs/cli/sshrm {};
+        fhsEnv-dev = callPackage ../pkgs/cli/fhsEnv-dev {};
+        GLFfetch = callPackage ../pkgs/cli/GLFfetch {};
+        hello = callPackage ../pkgs/misc/hello {};
         ### Add new pkgs here
       };
     };
