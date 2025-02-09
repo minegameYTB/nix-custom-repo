@@ -7,8 +7,8 @@ stdenvNoCC.mkDerivation rec {
   src = fetchFromGitHub {
     owner = "minegameYTB";
     repo = pname;
-    rev = "e050de0e8e77f0068a745a1659adb7533b43a29e";
-    sha256 = "sha256-BEWPX5rUm2k/O6g6uHvSjOxCUqsUMmwXBwhMQmnBd48=";
+    rev = "41632799a15c9c9497f5cdb80ed9fabc6dd8996f";
+    sha256 = "sha256-FVW9/p1U/fe8QFpJUust5cc14hIjfUKIqrAFpmHMBec=";
   };
 
   outputs = [ "out" "assets" ];
@@ -29,7 +29,7 @@ stdenvNoCC.mkDerivation rec {
 
     substituteInPlace $assets/share/${pname}/challenge.jsonc \
       --replace-warn @GLF-path@ "$assets/share/${pname}" \
-      --replace-warn @shell@ "${bash}"
+      --replace-warn @shell@ "${bash}/bin/bash"
 
     for script in $assets/share/${pname}/scripts/*.sh; do
       substituteInPlace "$script" \
