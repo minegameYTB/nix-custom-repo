@@ -2,7 +2,7 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "GLFfetch-nixos";
-  version = "git-${builtins.substring 0 7 src.rev}";  # Dynamically generate version from Git hash
+  version = "git-${builtins.substring 0 7 src.rev}";  # Génération dynamique de la version
 
   src = fetchFromGitHub {
     owner = "minegameYTB";
@@ -14,7 +14,7 @@ stdenvNoCC.mkDerivation rec {
   outputs = [ "out" "assets" ];
   outputsToInstall = outputs;
 
-  buildInputs = [ fastfetch coreutils ];
+  buildInputs = [ fastfetch coreutils gawk ];
   nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
@@ -22,23 +22,27 @@ stdenvNoCC.mkDerivation rec {
     
     cp $src/challenge.jsonc $assets/share/${pname}/challenge.jsonc
     cp $src/GLF.png $assets/share/${pname}/GLF.png
-    cp -r $src/scripts/* $assets/share/${pname}/scripts/
+    
+    if [ -d "$src/scripts" ]; then
+      cp -r $src/scripts/* $assets/share/${pname}/scripts/
+    fi
 
     substituteInPlace $assets/share/${pname}/challenge.jsonc \
-      --replace @GLF-path@ $assets/share/${pname}
-    
+      --replace-warn @GLF-path@ "$assets/share/${pname}"
+
     for script in $assets/share/${pname}/scripts/*.sh; do
-      substituteInPlace "$script" --replace @GLF-path@ $assets/share/${pname} \
-        --replace @coreutils@ ${coreutils} \
-        --replace @gawk@ ${gawk}
+      substituteInPlace "$script" \
+        --replace-warn @GLF-path@ "$assets/share/${pname}" \
+        --replace-warn @coreutils@ "${coreutils}" \
+        --replace-warn @gawk@ "${gawk}"
       chmod +x "$script"
     done
 
     makeWrapper ${fastfetch}/bin/fastfetch $out/bin/GLFfetch \
-      --add-flags "--config $assets/share/${pname}/challenge.jsonc \
-      --prefix PATH : ${coreutils}/bin
+      --add-flags "--config $assets/share/${pname}/challenge.jsonc" \
+      --prefix PATH : ${coreutils}/bin:${gawk}/bin
 
-      ### symlink GLFfetch to GLFfetch-nixos to run it directly with nix run
-      ln -s $out/bin/GLFfetch $out/bin/GLFfetch-nixos
+    ln -s $out/bin/GLFfetch $out/bin/GLFfetch-nixos
   '';
 }
+
