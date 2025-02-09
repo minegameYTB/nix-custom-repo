@@ -35,7 +35,7 @@ stdenvNoCC.mkDerivation rec {
     done
 
     makeWrapper ${fastfetch}/bin/fastfetch $out/bin/GLFfetch \
-      --add-flags "--config $assets/share/${pname}/challenge.jsonc --chafa $assets/share/${pname}/GLF.png" \
+      --add-flags "--config $assets/share/${pname}/challenge.jsonc \
       --prefix PATH : ${coreutils}/bin
 
       ### symlink GLFfetch to GLFfetch-nixos to run it directly with nix run
