@@ -1,14 +1,25 @@
-{ stdenvNoCC, substituteAll, writeScriptBin, fetchFromGitHub, fastfetch, coreutils, gawk, bash, makeWrapper }:
+{ 
+  stdenvNoCC, 
+  substituteAll, 
+  writeScriptBin, 
+  fetchFromGitHub, 
+  makeWrapper, 
+  fastfetch, 
+  coreutils, 
+  gawk,
+  bash, 
+  glfIcon ? "GLF"  # ### Use GLF icon or GLFos icon (to change icon)
+}:
 
 stdenvNoCC.mkDerivation rec {
   pname = "GLFfetch-nixos";
-  version = "git-${builtins.substring 0 7 src.rev}";  ### To update version number
+  version = "git-${builtins.substring 0 7 src.rev}";
 
   src = fetchFromGitHub {
     owner = "minegameYTB";
     repo = pname;
-    rev = "41632799a15c9c9497f5cdb80ed9fabc6dd8996f";
-    sha256 = "sha256-FVW9/p1U/fe8QFpJUust5cc14hIjfUKIqrAFpmHMBec=";
+    rev = "a0935f03d32acdeb108798f3fe9cfb18ce5413a1";
+    sha256 = "sha256-fO+vko4Ef41jXReIhZv2BVPTkETpAslZUrdBhyvVO2w=";
   };
 
   outputs = [ "out" "assets" ];
@@ -18,18 +29,24 @@ stdenvNoCC.mkDerivation rec {
   nativeBuildInputs = [ makeWrapper ];
 
   installPhase = ''
-    mkdir -p $out/bin $assets/share/${pname} $assets/share/${pname}/scripts
-    
-    cp $src/challenge.jsonc $assets/share/${pname}/challenge.jsonc
+    ### Create directory
+    mkdir -p $out/bin $assets/share/${pname}/scripts
     cp $src/GLF.png $assets/share/${pname}/GLF.png
-    
-    if [ -d "$src/scripts" ]; then
-      cp -r $src/scripts/* $assets/share/${pname}/scripts/
-    fi
+    cp $src/GLFos.png $assets/share/${pname}/GLFos.png
+
+    # Set icon on a variable
+    iconPath=$assets/share/${pname}/${glfIcon}.png
+
+    cp $src/challenge.jsonc $assets/share/${pname}/challenge.jsonc
 
     substituteInPlace $assets/share/${pname}/challenge.jsonc \
       --replace-warn @GLF-path@ "$assets/share/${pname}" \
+      --replace-warn @GLFos-icon@ "$iconPath" \
       --replace-warn @shell@ "${bash}/bin/bash"
+
+    if [ -d "$src/scripts" ]; then
+      cp -r $src/scripts/* $assets/share/${pname}/scripts/
+    fi
 
     for script in $assets/share/${pname}/scripts/*.sh; do
       substituteInPlace "$script" \
@@ -46,4 +63,3 @@ stdenvNoCC.mkDerivation rec {
     ln -s $out/bin/GLFfetch $out/bin/GLFfetch-nixos
   '';
 }
-
